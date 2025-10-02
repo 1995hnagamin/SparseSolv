@@ -20,7 +20,7 @@ set(PYBIND_EXPORT 1)
 
 # set base dir
 project(SparseSolv CXX)
-set(Basedir ${CMAKE_CURRENT_SOURCE_DIR})
+set(Basedir ${PROJECT_SOURCE_DIR})
 
 # set dir set
 add_subdirectory(SparseSolv)
