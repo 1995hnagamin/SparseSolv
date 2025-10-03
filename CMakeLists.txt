@@ -21,6 +21,7 @@ set(PYBIND_EXPORT 1)
 # set base dir
 project(SparseSolv CXX)
 set(Basedir ${PROJECT_SOURCE_DIR})
+set(Emitdir ${PROJECT_BINARY_DIR})
 
 # set dir set
 add_subdirectory(SparseSolv)
