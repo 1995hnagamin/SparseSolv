@@ -36,9 +36,10 @@ elseif(CMAKE_CXX_COMPILER MATCHES "icpx")
  target_link_libraries(voxel3DFEM.out PUBLIC -qmkl -ipo SparseSolv)
 #
 else()
- target_compile_options(voxel3DFEM.out PUBLIC -O3 -fopenmp)
+ find_package(OpenMP REQUIRED)
+ target_compile_options(voxel3DFEM.out PUBLIC -O3)
  target_include_directories(voxel3DFEM.out
   PUBLIC ${SparseSolvBase_SOURCE_DIR}
   PUBLIC ${SparseSolv_SOURCE_DIR})
- target_link_libraries(voxel3DFEM.out PUBLIC -lgomp SparseSolv)
+ target_link_libraries(voxel3DFEM.out PUBLIC OpenMP::OpenMP_CXX SparseSolv)
 endif()
