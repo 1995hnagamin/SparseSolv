@@ -19,7 +19,7 @@ public:
 	void tempInitialize();														/* 一時行列を作成 */
 	void resizeInitialize(slv_int new_size);									/* 一時行列を作成&初期化 */
 
-	SparseMatTMPL<DType> toMatrix(bool toSquare=false);							/* 一時配列を確定させる(bool toSquare: trueなら0を入れて正方行列にする) */
+	SparseMatTMPL<DType> build(bool toSquare=false);							/* 一時配列を確定させる(bool toSquare: trueなら0を入れて正方行列にする) */
 	bool isInclude(slv_int gyo, slv_int target_r, slv_int& result_retu) const;	/* i行目にtarget_r列があるかどうか（あったらそのindexを返す） */	
 	slv_int getMaxCol() const;													/* スパース内の最大の列位置を返す */
 	void add(slv_int gyo, slv_int retu, DType val);								/* 一時配列にpush */
@@ -84,7 +84,7 @@ void SparseMatBuilderTMPL<DType>::resizeInitialize(slv_int new_size){
 // ● 一時配列を確定させる
 //=======================================================*/
 template<typename DType>
-SparseMatTMPL<DType> SparseMatBuilderTMPL<DType>::toMatrix(bool toSquare){
+SparseMatTMPL<DType> SparseMatBuilderTMPL<DType>::build(bool toSquare){
 	/* Eigenに代入 */
 	slv_int max_retu = 0;
 	std::vector<Eigen::Triplet<DType>> tripletList;
@@ -101,8 +101,7 @@ SparseMatTMPL<DType> SparseMatBuilderTMPL<DType>::toMatrix(bool toSquare){
 				max_retu = pos;
 			}
 		}
-		std::map<slv_int, DType> empty; empty.clear();
-		tempMat[i].swap(empty);
+		tempMat[i].clear();
 	}
 	max_retu++;
 	/* Eigenに確定(列方向の最大値も指定する必要あり)。 */
