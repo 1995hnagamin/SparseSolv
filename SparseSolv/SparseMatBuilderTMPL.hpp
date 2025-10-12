@@ -151,14 +151,12 @@ template<typename DType>
 slv_int SparseMatBuilderTMPL<DType>::getMaxCol()const{
 	slv_int max = 0;
 	for(slv_int i = 0; i < size; i++) {
-		auto itr = tempMat[i].begin();
-		const slv_int the_size = tempMat[i].size();
-		for(slv_int j = 0 ; j < the_size ; j++){
-			const slv_int tmp = itr->first;
-			if(max < tmp){
-				max = tmp;
-			}
-			itr++;
+		if(tempMat[i].empty()) {
+			continue;
+		}
+		const slv_int tmp = tempMat[i].crbegin()->first;
+		if(max < tmp){
+			max = tmp;
 		}
 	}
 	return max;
