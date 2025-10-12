@@ -16,8 +16,6 @@ public:
 	slv_int getSize() const{ return size; };
 
 	void tempInitialize(slv_int ss);											/* 一時行列を作成 */
-	void tempInitialize();														/* 一時行列を作成 */
-	void resizeInitialize(slv_int new_size);									/* 一時行列を作成&初期化 */
 
 	SparseMatTMPL<DType> build(bool toSquare=false);							/* 一時配列を確定させる(bool toSquare: trueなら0を入れて正方行列にする) */
 	bool isInclude(slv_int gyo, slv_int target_r, slv_int& result_retu) const;	/* i行目にtarget_r列があるかどうか（あったらそのindexを返す） */	
@@ -42,7 +40,7 @@ template<typename DType>
 SparseMatBuilderTMPL<DType>::SparseMatBuilderTMPL(slv_int size0):
 		size(size0), tempMat(nullptr){
 	/* 一時行列初期化 */
-	tempInitialize();
+	tempInitialize(size);
 }
 
 
@@ -54,31 +52,6 @@ void SparseMatBuilderTMPL<DType>::tempInitialize(slv_int ss){
 	assert(ss > 0 && "Mat size is not initialized ! ");
 	size = ss;
 	tempMat = std::make_unique<std::map<slv_int, DType>[]>(size);
-}
-
-/*//=======================================================
-// ● 一時行列の初期化
-//=======================================================*/
-template<typename DType>
-void SparseMatBuilderTMPL<DType>::tempInitialize(){
-	assert(size > 0 && "Mat size is not initialized ! ");
-	tempMat = std::make_unique<std::map<slv_int, DType>[]>(size);
-	for(slv_int i = 0 ; i < size ; i++){
-		tempMat[i].clear();
-	}
-}
-
-/*//=======================================================
-// ● 一時行列を作成&初期化
-//=======================================================*/
-template<typename DType>
-void SparseMatBuilderTMPL<DType>::resizeInitialize(slv_int new_size){
-	tempMat.reset(nullptr);
-	size = new_size;
-	tempMat = std::make_unique<std::map<slv_int, DType>[]>(size);
-	for(slv_int i = 0 ; i < size ; i++){
-		tempMat[i].clear();
-	}
 }
 
 /*//=======================================================
