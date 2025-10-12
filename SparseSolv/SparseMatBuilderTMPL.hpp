@@ -60,24 +60,16 @@ void SparseMatBuilderTMPL<DType>::tempInitialize(slv_int ss){
 template<typename DType>
 SparseMatTMPL<DType> SparseMatBuilderTMPL<DType>::build(bool toSquare){
 	/* Eigenに代入 */
-	slv_int max_retu = 0;
+	slv_int max_retu = 1 + this->getMaxCol();
 	std::vector<Eigen::Triplet<DType>> tripletList;
 	for(slv_int i = 0; i < size; i++) {
-		const slv_int ss = tempMat[i].size();
-		if(ss == 0) {
-			continue;
-		}
 		for(auto& itr : tempMat[i]) {
 			const slv_int pos = itr.first;
 			const DType val = itr.second;
 			tripletList.push_back(Eigen::Triplet<DType>(i, pos, val));
-			if(pos > max_retu){
-				max_retu = pos;
-			}
 		}
 		tempMat[i].clear();
 	}
-	max_retu++;
 	/* Eigenに確定(列方向の最大値も指定する必要あり)。 */
 	/* toSquare=true なら、行数の方が大きいなら正方サイズにする */
 	/* toSquare=false なら、長方形のまま */
