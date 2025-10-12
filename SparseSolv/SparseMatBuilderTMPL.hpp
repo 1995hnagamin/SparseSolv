@@ -51,8 +51,9 @@ SparseMatBuilderTMPL<DType>::SparseMatBuilderTMPL(slv_int size0):
 //=======================================================*/
 template<typename DType>
 void SparseMatBuilderTMPL<DType>::tempInitialize(slv_int ss){
+	assert(ss > 0 && "Mat size is not initialized ! ");
 	size = ss;
-	this->tempInitialize();
+	tempMat = std::make_unique<std::map<slv_int, DType>[]>(size);
 }
 
 /*//=======================================================
