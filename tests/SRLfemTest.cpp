@@ -17,7 +17,7 @@ TEST(SRLfemTest, IsFixedAssertions) {
       }
     }
   }
-  EXPECT_EQ(matAs.isFixed(), false);
+  EXPECT_FALSE(matAs.isFixed());
   matAs.fix();
-  EXPECT_EQ(matAs.isFixed(), true);
+  EXPECT_TRUE(matAs.isFixed());
 }
