@@ -18,6 +18,10 @@ endif()
 # set true if you use pybind11
 set(PYBIND_EXPORT 1)
 
+# FetchContent setup
+include(FetchContent)
+#set(FETCHCONTENT_BASE_DIR ${SparseSolvBase_BINARY_DIR}/000_thirdparty)
+
 # set base dir
 project(SparseSolvBase CXX)
 
@@ -30,3 +34,12 @@ endif()
 # sample 
 add_subdirectory(examples/VoxelFEM)
 
+# test setup
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/52eb8108c5bdec04579160ae17225d66034bd723.zip
+  DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
+FetchContent_MakeAvailable(googletest)
+enable_testing()
+add_subdirectory(tests)
